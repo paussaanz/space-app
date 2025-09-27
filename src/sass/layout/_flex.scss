@@ -1,0 +1,166 @@
+/*Este archivo contiene clases de utilidad para aplicar estilos de flexbox.
+
+Uso de clases de flex:
+   - `.flex`: Activa `display: flex` en el contenedor.
+   - `.flex__row`: Coloca los elementos en fila (por defecto).
+   - `.flex__row-rev`: Invierte el orden de los elementos en fila.
+   - `.flex__col`: Coloca los elementos en columna.
+   - `.flex__col-rev`: Invierte el orden de los elementos en columna.
+   - `.flex__nowrap`: Evita que los elementos envuelvan (comportamiento predeterminado).
+   - `.flex__wrap`: Permite el envolvimiento de los elementos en múltiples líneas.
+   - `.flex__wrap-reverse`: Envuelve los elementos en múltiples líneas en orden inverso.
+   - `.flex__j-...`: Alinea los elementos al inicio del contenedor.
+   - `.flex__a-...`: Alinea los elementos al inicio del eje transversal.
+   - `.flex__a-c-...`: Alinea el contenido al inicio.
+   - `.flex__auto`: Permite que el elemento ocupe el espacio disponible en el contenedor.
+   - `.flex__g-0` a `.flex__g-5`: Controla el crecimiento del elemento en el contenedor de 0 (sin crecer) a 5 (máximo crecimiento).
+   - `.flex__s-0` a `.flex__s-5`: Controla la reducción del elemento en el contenedor de 0 (sin reducirse) a 5 (máxima reducción).
+   - `.flex__b-auto`: Asigna la base de flex a `auto`.
+   - `.flex__b-0`, `.flex__b-25`, `.flex__basis-50`, `.flex__basis-75`, `.flex__basis-100`: Asigna una base de flex en porcentajes (0% a 100%).
+*/
+
+// Flex container
+.flex {
+  display: flex;
+
+  &__row {
+    flex-direction: row;
+
+    &__md {
+      @include media-breakpoint-down(md) {
+        flex-direction: row;
+      }
+    }
+  }
+
+  &__col {
+    flex-direction: column;
+
+    &__md {
+      @include media-breakpoint-down(md) {
+        flex-direction: column;
+      }
+    }
+  }
+
+  // Flex wrap modifiers
+  &__nowrap {
+    flex-wrap: nowrap;
+  }
+
+  &__wrap {
+    flex-wrap: wrap;
+  }
+
+  &__wrap__rev {
+    flex-wrap: wrap-reverse;
+  }
+
+  // Justify content modifiers
+  &__j__start {
+    justify-content: flex-start;
+
+    &__md {
+      @include media-breakpoint-down(md) {
+        justify-content: flex-start !important;
+      }
+    }
+  }
+
+  &__j__center {
+    justify-content: center;
+  }
+
+  &__j__end {
+    justify-content: flex-end;
+  }
+
+  &__j__between {
+    justify-content: space-between;
+  }
+
+  &__j__around {
+    justify-content: space-around;
+  }
+
+  &__j__evenly {
+    justify-content: space-evenly;
+  }
+
+  // Align items modifiers
+  &__a__start {
+    align-items: flex-start;
+  }
+
+  &__a__center {
+    align-items: center;
+  }
+
+  &__a__end {
+    align-items: flex-end;
+  }
+
+  &__a__stretch {
+    align-items: stretch;
+  }
+
+  &__a__baseline {
+    align-items: baseline;
+  }
+
+  // Align content modifiers (for multi-line flex containers)
+  &__a__c__start {
+    align-content: flex-start;
+  }
+
+  &__a__c__center {
+    align-content: center;
+  }
+
+  &__a__c__end {
+    align-content: flex-end;
+  }
+
+  &__a__c__between {
+    align-content: space-between;
+  }
+
+  &__a__c__around {
+    align-content: space-around;
+  }
+
+  &__a__c__stretch {
+    align-content: stretch;
+  }
+
+  &__1 {
+    flex: 1;
+  }
+  // Flex auto
+  &__auto {
+    flex: auto;
+  }
+
+  // Flex-grow
+  @for $i from 0 through 5 {
+    &__g__#{$i} {
+      flex-grow: $i !important;
+    }
+  }
+
+  // Flex-shrink
+  @for $i from 0 through 5 {
+    &__s__#{$i} {
+      flex-shrink: $i !important;
+    }
+  }
+
+  // Flex-basis
+  @each $basis,
+    $value in (auto: auto, 0: 0%, 25: 25%, 50: 50%, 75: 75%, 100: 100%)
+  {
+    &__b__#{$basis} {
+      flex-basis: $value !important;
+    }
+  }
+}

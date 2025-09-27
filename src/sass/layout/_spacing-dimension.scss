@@ -1,0 +1,308 @@
+/* Este archivo contiene clases de utilidad para aplicar estilos de dimensiones, posiciones, padding, margin, y gap.
+
+Uso de clases de dimensiones (`.d`):
+   - `.d__vh-50`, `.d__vh-100`, etc.: Establece la altura en unidades `vh` (50vh, 100vh, etc.).
+   - `.d__vw-50`, `.d__vw-100`: Establece el ancho en unidades `vw`.
+   - `.d__h-max`, `.d__h-fit`, `.d__h-100`: Define la altura máxima (`max-content`), ajustada (`fit-content`), o completa (`100%`).
+   - `.d__w-max`, `.d__w-fit`, `.d__w-100`: Define el ancho máximo (`max-content`), ajustado (`fit-content`), o completo (`100%`).
+
+Uso de clases de posición (`.position`):
+   - `.position__relative`, `.position__absolute`, `.position__sticky`, `.position__fixed`: Aplica valores de posición (`relative`, `absolute`, `sticky`, `fixed`).
+   - `.position__top-0`, `.position__bottom-0`, etc.: Establece la posición en `top`, `bottom`, `left`, y `right` a `0`.
+   - `.position__top-50`, `.position__left-50`: Aplica `50%` de posición en `top` o `left`.
+
+Uso de clases de padding (`.p`):
+   - `.p__0`, `.p__1`, `.p__2`, etc.: Aplica padding general en todas las direcciones, de `0rem` a `3rem`.
+   - `.p__x-0`, `.p__x-1`, etc.: Aplica padding horizontal (izquierda y derecha).
+   - `.p__y-0`, `.p__y-1`, etc.: Aplica padding vertical (arriba y abajo).
+   - `.p__t-0`, `.p__r-0`, `.p__b-0`, `.p__l-0`, etc.: Aplica padding en direcciones individuales (top, right, bottom, left).
+
+Uso de clases de margin (`.m`):
+   - `.m__0`, `.m__1`, `.m__2`, etc.: Aplica margin general en todas las direcciones.
+   - `.m__lg-0`, `.m__lg-1`, etc.: Aplica margin general a partir de `lg` (min-width: 992px).
+   - `.m__x-0`, `.m__y-0`, etc.: Aplica margin horizontal (`x`) y vertical (`y`).
+   - `.m__x-lg-0`, `.m__y-lg-0`, etc.: Aplica margin horizontal y vertical en `lg`.
+   - `.m__t-auto`, `.m__r-auto`, `.m__b-auto`, `.m__l-auto`: Aplica margin automático (`auto`) en direcciones individuales.
+
+Uso de clases de gap (`.g`):
+   - `.g__1`, `.g__2`, etc.: Define un gap (espacio entre elementos) de `0.25rem` a `3rem`.
+
+*/
+
+.d {
+  // Viewport Heights
+  @each $size,
+    $value
+      in (50: 50vh, 100: 100vh, 200: 200vh, 500: 500vh, 300: 300vh, 600: 600vh)
+  {
+    &__vh#{$size} {
+      height: $value !important;
+    }
+
+    @include media-breakpoint-down(md) {
+      &__vh#{$size}__md {
+        height: $value !important;
+      }
+    }
+  }
+
+  // Viewport Widths
+  @each $size, $value in (50: 50vw, 100: 100vw) {
+    &__vw#{$size} {
+      width: $value !important;
+    }
+
+    @include media-breakpoint-down(md) {
+      &__vw#{$size}__md {
+        width: $value !important;
+      }
+    }
+  }
+
+  // Heights
+  @each $size, $value in (50: 50%, 100: 100%) {
+    &__h#{$size} {
+      height: $value !important;
+    }
+
+    @include media-breakpoint-down(md) {
+      &__h#{$size}__md {
+        height: $value !important;
+      }
+    }
+  }
+
+  //Widths
+  &__w100 {
+    width: 100% !important;
+
+    &__md {
+      @include media-breakpoint-down(md) {
+        width: 100% !important; // Mobile variant
+      }
+    }
+  }
+}
+
+.position {
+  @each $pos in (relative, absolute, sticky, fixed) {
+    &__#{$pos} {
+      position: $pos;
+    }
+  }
+}
+
+.top__0 {
+  top: 0; // Equivalente a "top-0" en Bootstrap
+}
+
+.bottom__0 {
+  bottom: 0; // Equivalente a "bottom-0" en Bootstrap
+}
+
+.left__0 {
+  left: 0; // Equivalente a "left-0" en Bootstrap
+}
+
+.right__0 {
+  right: 0; // Equivalente a "right-0" en Bootstrap
+}
+
+.top__50 {
+  top: 50%; // Equivalente a "top-0" en Bootstrap
+}
+
+.left__50 {
+  left: 50%; // Equivalente a "top-0" en Bootstrap
+}
+
+.translate {
+  &__middle {
+    transform: translate(-50%, -50%) !important;
+  }
+
+  &__middle__x {
+    transform: translateX(-50%) !important;
+  }
+
+  &__middle__y {
+    transform: translateY(-50%) !important;
+  }
+}
+
+.p {
+  // General padding
+  @each $i,
+    $value
+      in (
+        0: 0rem,
+        1: 0.25rem,
+        2: 0.5rem,
+        3: 1rem,
+        4: 1.5rem,
+        5: 3rem,
+        6: 3.125rem
+      )
+  {
+    &__#{$i} {
+      padding: $value;
+    }
+
+    @include media-breakpoint-down(md) {
+      @each $i,
+        $value
+          in (
+            0: 0rem,
+            1: 0.25rem,
+            2: 0.5rem,
+            3: 1rem,
+            4: 1.5rem,
+            5: 3rem,
+            6: 6.25rem
+          )
+      {
+        &__#{$i}__md {
+          padding: $value !important;
+        }
+      }
+    }
+  }
+
+  // Padding horizontal (left + right)
+  @each $i,
+    $value in (0: 0rem, 1: 0.25rem, 2: 0.5rem, 3: 1rem, 4: 1.5rem, 5: 3rem)
+  {
+    &__x-#{$i} {
+      padding-left: $value;
+      padding-right: $value;
+    }
+  }
+
+  // Padding vertical (top + bottom)
+  @each $i,
+    $value in (0: 0rem, 1: 0.25rem, 2: 0.5rem, 3: 1rem, 4: 1.5rem, 5: 3rem)
+  {
+    &__y-#{$i} {
+      padding-top: $value;
+      padding-bottom: $value;
+    }
+  }
+
+  // Padding individual (top, right, bottom, left)
+  @each $i,
+    $value in (0: 0rem, 1: 0.25rem, 2: 0.5rem, 3: 1rem, 4: 1.5rem, 5: 3rem)
+  {
+    &__t-#{$i} {
+      padding-top: $value;
+    }
+
+    &__r-#{$i} {
+      padding-right: $value;
+    }
+
+    &__b-#{$i} {
+      padding-bottom: $value;
+    }
+
+    &__l-#{$i} {
+      padding-left: $value;
+    }
+  }
+}
+
+.m {
+  // General margin
+  @each $i,
+    $value in (0: 0rem, 1: 0.25rem, 2: 0.5rem, 3: 1rem, 4: 1.5rem, 5: 3rem)
+  {
+    &__#{$i} {
+      margin: $value;
+    }
+
+    @include media-breakpoint-down(md) {
+      @each $i,
+        $value in (0: 0rem, 1: 0.25rem, 2: 0.5rem, 3: 1rem, 4: 1.5rem, 5: 3rem)
+      {
+        &__#{$i}__md {
+          padding: $value !important;
+        }
+      }
+    }
+  }
+
+  // Margin horizontal (left + right)
+  @each $i,
+    $value in (0: 0rem, 1: 0.25rem, 2: 0.5rem, 3: 1rem, 4: 1.5rem, 5: 3rem)
+  {
+    &__x__#{$i} {
+      margin-left: $value;
+      margin-right: $value;
+    }
+  }
+
+  // Margin vertical (top + bottom)
+  @each $i,
+    $value in (0: 0rem, 1: 0.25rem, 2: 0.5rem, 3: 1rem, 4: 1.5rem, 5: 3rem)
+  {
+    &__y__#{$i} {
+      margin-top: $value;
+      margin-bottom: $value;
+    }
+  }
+
+  // Margin individual (top, right, bottom, left)
+  @each $i,
+    $value in (0: 0rem, 1: 0.25rem, 2: 0.5rem, 3: 1rem, 4: 1.5rem, 5: 3rem)
+  {
+    &__t__#{$i} {
+      margin-top: $value;
+    }
+
+    &__r__#{$i} {
+      margin-right: $value;
+    }
+
+    &__b-#{$i} {
+      margin-bottom: $value;
+    }
+
+    &__l__#{$i} {
+      margin-left: $value;
+    }
+  }
+
+  &__y__auto {
+    margin-top: auto;
+    margin-bottom: auto;
+  }
+
+  &__t__auto {
+    margin-top: auto;
+  }
+
+  &__r__auto {
+    margin-right: auto;
+  }
+
+  &__b__auto {
+    margin-bottom: auto;
+  }
+
+  &__l__auto {
+    margin-left: auto;
+  }
+}
+
+.g {
+  @each $i, $value in (1: 0.25rem, 2: 0.5rem, 3: 1rem, 4: 1.5rem, 5: 3rem) {
+    &__#{$i} {
+      gap: $value; // Equivalente a "gap-1", "gap-2", etc. en Bootstrap
+    }
+
+    @include media-breakpoint-down(md) {
+      &__#{$i}__md {
+        gap: $value !important; // Equivalente a "gap-1", "gap-2", etc. en Bootstrap
+      }
+    }
+  }
+}

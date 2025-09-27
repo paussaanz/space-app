@@ -1,0 +1,33 @@
+/styles
+|-- /abstracts
+| |-- \_variables.scss // Variables de colores, fuentes, etc.
+| |-- \_mixins.scss // Mixins comunes, tamaños, etc...
+|
+|-- /base
+| |-- \_text.scss // Tipografía y estilos de texto
+|
+|-- /layout
+| |-- \_grid.scss // Estilos de grid
+| |-- \_flex.scss // Estilos de flex
+| |-- \_spacing.scss // Espaciado paddings y margins...
+|
+|-- /utilities
+| |-- \_colors.scss // Colores y fondos
+| |-- \_helpers.scss // Clases utilitarias, display, position, sizes etc...
+|
+|-- /animations
+| |-- \_animations.scss // Animaciones en general
+|
+|-- main.scss // Main, donde yo metería los imports de los demás archivos
+|
+|
+
+<-- Ya luego en cada componente que tenga estilos a doc muy concretos crearía su propio sass asi: -->
+
+| | |--\_MyPage/Component.jsx
+|-- /pages/component
+| |-- MyPage/Component
+| | |-- MyPage/Component.jsx
+| | |-- \_MyPage/Component.sass
+
+<-- e importas el sass como siempre: import './\_MyPage/Component.sass' dentro del componente -->

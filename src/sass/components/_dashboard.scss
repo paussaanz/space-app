@@ -1,0 +1,404 @@
+/* ===== Dashboard grid ===== */
+.dashboard {
+  --gap: clamp(14px, 2vw, 20px);
+  display: grid;
+  gap: var(--gap);
+  grid-template-columns: repeat(12, 1fr);
+}
+.dashboard::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: var(--noise-url);
+  background-size: 1600px auto;
+  mix-blend-mode: soft-light;
+  opacity: 0.18;
+  pointer-events: none;
+}
+.dashboard > .card-spotlight {
+  grid-column: span 4;
+}
+.dashboard > .card--cta {
+  grid-column: span 8;
+  display: grid;
+  place-items: center;
+}
+@media (max-width: 1080px) {
+  .dashboard > .card-spotlight,
+  .dashboard > .card--cta {
+    grid-column: span 6;
+  }
+}
+@media (max-width: 720px) {
+  .dashboard > .card-spotlight,
+  .dashboard > .card--cta {
+    grid-column: 1 / -1;
+  }
+}
+
+/* ===== Spotlight Card base (tu componente) ===== */
+.card-spotlight {
+  position: relative;
+  border-radius: var(--r-card);
+  border: 1px solid var(--glass-stroke);
+  background-color: rgba(17, 17, 17, 0.65);
+  padding: clamp(16px, 2.4vw, 22px);
+  overflow: hidden;
+  --mouse-x: 50%;
+  --mouse-y: 50%;
+  --spotlight-color: rgba(255, 255, 255, 0.06);
+  color: var(--text);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(var(--glass-blur)) saturate(120%);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(120%);
+}
+.card-spotlight::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at var(--mouse-x) var(--mouse-y),
+    var(--spotlight-color),
+    transparent 80%
+  );
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  pointer-events: none;
+}
+.card-spotlight:hover::before,
+.card-spotlight:focus-within::before {
+  opacity: 0.6;
+}
+/* ruido sutil */
+.card-spotlight::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: var(--noise-url);
+  background-size: cover;
+  opacity: 0.22;
+  mix-blend-mode: soft-light;
+  pointer-events: none;
+}
+
+/* ===== Variantes con halos ===== */
+.card-spotlight--nebula {
+  background: radial-gradient(
+      1200px 600px at 20% -10%,
+      rgba(126, 243, 255, 0.16),
+      transparent 55%
+    ),
+    radial-gradient(
+      1000px 520px at 110% 10%,
+      rgba(123, 123, 255, 0.14),
+      transparent 60%
+    ),
+    var(--glass-bg);
+  box-shadow: var(--glow-cyan), var(--glow-violet),
+    0 16px 40px rgba(0, 0, 0, 0.35);
+}
+.card-spotlight--aurora {
+  background: radial-gradient(
+      900px 520px at -10% 110%,
+      rgba(60, 228, 179, 0.18),
+      transparent 60%
+    ),
+    radial-gradient(
+      900px 420px at 110% 120%,
+      rgba(255, 184, 107, 0.16),
+      transparent 60%
+    ),
+    var(--glass-bg);
+  box-shadow: var(--glow-orange), 0 16px 40px rgba(0, 0, 0, 0.35);
+}
+.card-spotlight--void {
+  background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.05),
+      rgba(255, 255, 255, 0.02)
+    ),
+    var(--glass-bg);
+}
+
+/* ===== Header / textos dentro de la card ===== */
+.card-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+.card-title {
+  margin: 0;
+  font-family: var(--ff-head, system-ui);
+  letter-spacing: 0.02em;
+  font-size: clamp(16px, 1.2rem + 0.3vw, 20px);
+  background: linear-gradient(180deg, #fff, #bfc7d6 60%, #9aa6be);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.05);
+}
+.card-subtitle {
+  margin: 0;
+  color: var(--text-dim);
+  font-size: 0.9rem;
+}
+.muted {
+  color: var(--text-dim);
+}
+
+.chip {
+  font-size: 0.78rem;
+  color: var(--text);
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.06),
+    rgba(255, 255, 255, 0.02)
+  );
+  border: 1px solid var(--glass-stroke);
+  padding: 6px 10px;
+  border-radius: 999px;
+}
+
+/* ===== Botón fantasma ===== */
+.btn--ghost {
+  --stroke: rgba(255, 255, 255, 0.18);
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.08),
+    rgba(255, 255, 255, 0.03)
+  );
+  color: var(--text);
+  border: 1px solid var(--stroke);
+  padding: 10px 14px;
+  border-radius: 12px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+}
+.btn--ghost:hover {
+  transform: translateY(-1px);
+  border-color: rgba(255, 255, 255, 0.35);
+}
+
+/* ===== Widgets ===== */
+.kpi {
+  display: grid;
+  gap: 8px;
+}
+.kpi__value {
+  font-family: var(--ff-head, system-ui);
+  font-size: clamp(32px, 6vw, 56px);
+  line-height: 1;
+}
+.kpi__legend {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-dim);
+  font-size: 0.94rem;
+}
+.bullet {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  display: inline-block;
+}
+.bullet--a {
+  background: var(--c-accent-1);
+  box-shadow: 0 0 10px rgba(126, 243, 255, 0.6);
+}
+.bullet--b {
+  background: var(--c-accent-2);
+  box-shadow: 0 0 10px rgba(123, 123, 255, 0.6);
+}
+
+.mini-chart {
+  width: 100%;
+}
+.mini-chart .dot {
+  fill: #fff;
+  stroke: var(--c-accent-1);
+  stroke-width: 2;
+}
+
+.curve {
+  position: relative;
+}
+.curve .mini-chart {
+  height: 90px;
+}
+.curve__stat {
+  position: absolute;
+  right: 6px;
+  bottom: 4px;
+  background: rgba(11, 15, 21, 0.45);
+  border: 1px solid var(--glass-stroke);
+  padding: 8px 10px;
+  border-radius: 12px;
+  backdrop-filter: blur(8px);
+}
+.curve__value {
+  font-weight: 800;
+  color: var(--c-accent-1);
+}
+.curve__caption {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--text-dim);
+}
+
+.calendar {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+}
+.calendar__day {
+  border: 1px solid var(--glass-stroke);
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.07),
+    rgba(255, 255, 255, 0.03)
+  );
+  color: var(--text);
+  padding: 10px 12px;
+  border-radius: 12px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+.calendar__day:hover {
+  border-color: rgba(255, 255, 255, 0.35);
+  transform: translateY(-1px);
+}
+.calendar__day.is-active {
+  background: linear-gradient(
+    180deg,
+    rgba(126, 243, 255, 0.22),
+    rgba(126, 243, 255, 0.05)
+  );
+  box-shadow: 0 0 0 1px rgba(126, 243, 255, 0.25) inset, var(--glow-cyan);
+}
+.calendar__footer {
+  grid-column: 1 / -1;
+  margin-top: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px;
+  border: 1px dashed rgba(255, 255, 255, 0.14);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.03);
+}
+.calendar .big {
+  font-size: 1.8rem;
+  font-family: var(--ff-head, system-ui);
+}
+.trend {
+  display: grid;
+  gap: 2px;
+  text-align: right;
+  color: var(--text-dim);
+}
+.trend__delta {
+  color: var(--c-accent-4);
+  font-weight: 700;
+}
+
+/* Arte de órbitas */
+.orbit-art {
+  position: relative;
+  aspect-ratio: 1/1;
+  width: 100%;
+  background: radial-gradient(
+      120% 80% at 0% 100%,
+      rgba(126, 243, 255, 0.12),
+      transparent 60%
+    ),
+    radial-gradient(
+      120% 80% at 100% 0%,
+      rgba(255, 184, 107, 0.12),
+      transparent 60%
+    );
+  border-radius: 16px;
+  overflow: hidden;
+}
+.orbit-art .glow {
+  position: absolute;
+  inset: -30% -20%;
+  background: radial-gradient(
+      60% 60% at 40% 50%,
+      rgba(126, 243, 255, 0.18),
+      transparent 60%
+    ),
+    radial-gradient(
+      60% 60% at 70% 40%,
+      rgba(123, 123, 255, 0.18),
+      transparent 60%
+    );
+  filter: blur(30px);
+}
+.orbit-art .orbit {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+}
+.orbit-art .orbit--1 {
+  border: 1px dashed rgba(255, 255, 255, 0.18);
+  inset: 10%;
+  animation: spin 24s linear infinite;
+}
+.orbit-art .orbit--2 {
+  border: 1px dashed rgba(255, 255, 255, 0.1);
+  inset: 22%;
+  animation: spin 36s linear reverse infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Motion a11y */
+@media (prefers-reduced-motion: reduce) {
+  .orbit-art .orbit {
+    animation: none;
+  }
+  .btn--ghost {
+    transition: none;
+  }
+}
+
+.gauge {
+  position: relative;
+  width: 160px;
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+
+  &__arc {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    mask: radial-gradient(circle at center, transparent 60%, black 61%);
+    -webkit-mask: radial-gradient(circle at center, transparent 60%, black 61%);
+    filter: drop-shadow(0 0 12px var(--c-accent-1));
+  }
+
+  &__center {
+    position: absolute;
+    text-align: center;
+  }
+
+  &__value {
+    font-size: 1.4rem;
+    font-weight: 700;
+  }
+
+  &__label {
+    font-size: 0.8rem;
+    opacity: 0.8;
+  }
+}

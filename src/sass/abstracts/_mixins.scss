@@ -1,0 +1,87 @@
+@mixin bg-image() {
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size:   cover;
+}
+
+@mixin media-breakpoint-up($size) {
+  $min-width: null;
+
+  @if $size == sm {
+    $min-width: $cor-container-max-widths-sm;
+  } @else if $size == md {
+    $min-width: $cor-container-max-widths-md;
+  } @else if $size == lg {
+    $min-width: $cor-container-max-widths-lg;
+  } @else if $size == xl {
+    $min-width: $cor-container-max-widths-xl;
+  } @else if $size == xxl {
+    $min-width: $cor-container-max-widths-xxl;
+  }
+
+  @if $min-width {
+    @media (min-width: $min-width) {
+      @content;
+    }
+  }
+}
+
+@mixin media-breakpoint-down($size) {
+  $max-width: null;
+
+  @if $size == sm {
+    $max-width: $cor-container-max-widths-sm - 0.02px;
+  } @else if $size == md {
+    $max-width: $cor-container-max-widths-md - 0.02px;
+  } @else if $size == lg {
+    $max-width: $cor-container-max-widths-lg - 0.02px;
+  } @else if $size == xl {
+    $max-width: $cor-container-max-widths-xl - 0.02px;
+  } @else if $size == xxl {
+    $max-width: $cor-container-max-widths-xxl - 0.02px;
+  }
+
+  @if $max-width {
+    @media (max-width: $max-width) {
+      @content;
+    }
+  }
+}
+
+
+@mixin title($tipo) {
+  font-family: $cor-font-family-headings;
+
+  @if $tipo == 1 {
+    line-height: $cor-h1-line-height;
+    letter-spacing: $cor-h1-letter-spacing;
+  } @else if $tipo == 2 {
+    line-height: $cor-h2-line-height;
+    letter-spacing: $cor-h2-letter-spacing;
+  } @else if $tipo == 3 {
+    line-height: $cor-h3-line-height;
+    letter-spacing: $cor-h3-letter-spacing;
+  } @else if $tipo == 4 {
+    line-height: $cor-h4-line-height;
+    letter-spacing: $cor-h4-letter-spacing;
+    font-weight: $cor-headings-font-weight-light
+  } @else if $tipo == 5 {
+    line-height: $cor-h5-line-height;
+    letter-spacing: $cor-h5-letter-spacing;
+    font-weight: $cor-headings-font-weight-light
+  } @else if $tipo == 6 {
+    line-height: $cor-h6-line-height;
+    letter-spacing: $cor-h6-letter-spacing;
+    font-weight: $cor-headings-font-weight-light
+  }
+}
+
+@mixin icon-style() {
+  content:           "";
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size:   contain;
+  display:           inline-block;
+  //position: relative;
+
+}

@@ -1,0 +1,146 @@
+// -------------- Sistema de diseño --------------
+// Las variables que se definan aquí hay que aplicarlas en las variables de bootstrap definidas a continuación
+
+// Colores corporativos
+:root {
+    --cor-white: #EBE6E0;
+    --cor-black: #202020;
+    --cor-orange: #EA6116;
+    --cor-red: #551720;
+    --cor-yellow: #FFC579;
+    --cor-light-orange: #FF7D36
+    --cor-navbar-black: #202020;
+
+    --cor-overlay: #EBE6E0;
+    --cor-button-light: #EBE6E0;
+    --cor-button-green: #2F4F4F;
+    --cor-button-dark: #131313;
+    --cor-button-purple: #301A4B;
+    --cor-cursor-mix: color-burn;
+}
+
+// Configuración fuentes generales
+$cor-font-family-body: "Questrial" !default;
+
+// Configuración fuentes Headings añadidas en _mixins.scss
+$cor-font-family-headings: "SpaceMono" !default;
+
+//Configuración Editorials body 
+$cor-font-family-tag: "Darker Grotesque", sans-serif !default;
+
+// Espacio para los bloques
+$cor-spacer: 1rem !default;
+
+// Define la paleta de colores básica
+$cor-black: #000000 !default;
+$cor-white: #FFFFFF !default; // Respetar siempre em blanco puro
+$cor-transparent: transparent !default;
+
+// Configuración colores del body
+$cor-body-color: var(--cor-dark);
+$cor-body-bg: $cor-white;
+
+// Colores para los iconos reemplazamos # por %23
+$cor-color-icons-svg: str-replace(#{var(--cor-primary)}, "#", "%23");
+$cor-color-icons-svg-white: str-replace(#{$cor-white}, "#", "%23");
+$cor-color-icons-svg-black: str-replace(#{$cor-black}, "#", "%23");
+
+// Configuración containers
+/*
+//Original
+$cor-container-max-widths-sm: 540px;
+$cor-container-max-widths-md: 720px;
+$cor-container-max-widths-lg: 960px;
+$cor-container-max-widths-xl: 1140px;
+$cor-container-max-widths-xxl: 1320px;
+ */
+$cor-container-max-widths-sm: 540px;
+$cor-container-max-widths-md: 720px; //PHONE
+$cor-container-max-widths-lg: 1000px; //IPAD
+$cor-container-max-widths-xl: 1440px;
+$cor-container-max-widths-xxl: 1480px;
+
+//Grid breakpoints
+$cor-grid-breakpoints-xs: 0;
+$cor-grid-breakpoints-sm: 576px;
+$cor-grid-breakpoints-md: 768px;
+$cor-grid-breakpoints-lg: 992px;
+$cor-grid-breakpoints-xl: 1900px;
+$cor-grid-breakpoints-xxl: 2500px;
+
+// Fonts base
+$cor-font-size-base: 1rem * toRem(16) !default; // 14px
+$cor-font-size-base-text: 1rem !default; //16 px
+$cor-line-height-base: 1.2 !default;
+
+// Headings
+$cor-headings-line-height: 1.4 !default;
+$cor-headings-font-weight: 600;
+$cor-headings-font-weight-light: 500;
+
+// Headings y .fs-*
+$cor-h1-font-size: $cor-font-size-base-text * toRem(61) !default;
+$cor-h2-font-size: $cor-font-size-base-text * toRem(49) !default;
+$cor-h3-font-size: $cor-font-size-base-text * toRem(39) !default;
+$cor-h4-font-size: $cor-font-size-base-text * toRem(31) !default;
+$cor-h5-font-size: $cor-font-size-base-text * toRem(25) !default;
+$cor-h6-font-size: $cor-font-size-base-text * toRem(20) !default;
+
+// Configuraciones altura de linea añadidas en _mixins.scss
+$cor-h1-line-height: 1.10 !default;
+$cor-h2-line-height: 1.08 !default;
+$cor-h3-line-height: 1.20 !default;
+$cor-h4-line-height: 1.20 !default;
+$cor-h5-line-height: 1.20 !default;
+$cor-h6-line-height: 1.20 !default;
+
+// Configuraciones altura de linea añadidas en _mixins.scss
+$cor-h1-letter-spacing: normal !default;
+$cor-h2-letter-spacing: normal !default;
+$cor-h3-letter-spacing: normal !default;
+$cor-h4-letter-spacing: normal !default;
+$cor-h5-letter-spacing: normal !default;
+$cor-h6-letter-spacing: normal !default;
+
+//Tipos de letra de cuerpo de texto (b1 - b6) con tipografía Gamilia
+$b1-font-size: $cor-font-size-base-text * toRem(49); // ejemplo 18px
+$b2-font-size: $cor-font-size-base-text * toRem(39); // ejemplo 17px
+$b3-font-size: $cor-font-size-base-text * toRem(31); // 16px
+$b4-font-size: $cor-font-size-base-text * toRem(25); // ejemplo 15px
+$b5-font-size: $cor-font-size-base-text * toRem(20); // ejemplo 14px
+$b6-font-size: $cor-font-size-base-text * toRem(16); // ejemplo 13px
+
+
+//TAG
+$tag1-font-size: $cor-font-size-base-text * toRem(7); // ejemplo 13px
+$tag2-font-size: $cor-font-size-base-text * toRem(12); // ejemplo 13px
+$tag1-font-size-md: $cor-font-size-base-text * toRem(14); // ejemplo 13px
+$tag2-font-size-md: $cor-font-size-base-text * toRem(12); // ejemplo 13px
+
+// Configuración fuentes a partir de md .fs-1 .fs-2 y fs-md-1 que corresponde a los tamaños de los encabezados pero para textos añadidas en _utils.css
+// $cor-font-size-base-1-md: $cor-h1-font-size-md;
+// $cor-font-size-base-2-md: $cor-h2-font-size-md;
+// $cor-font-size-base-3-md: $cor-h3-font-size-md;
+// $cor-font-size-base-4-md: $cor-h4-font-size-md;
+// $cor-font-size-base-5-md: $cor-h5-font-size-md;
+// $cor-font-size-base-6-md: $cor-h6-font-size-md;
+
+// Configuración fuentes extra-grandes .display-1 .display-2... añadidas en _utils.scss
+$cor-display-font-sizes-1: $cor-font-size-base-text * 5 !default;
+$cor-display-font-sizes-2: $cor-font-size-base-text * 4.5 !default;
+$cor-display-font-sizes-3: $cor-font-size-base-text * 4 !default;
+$cor-display-font-sizes-4: $cor-font-size-base-text * 3.5 !default;
+$cor-display-font-sizes-5: $cor-font-size-base-text * 3 !default;
+$cor-display-font-sizes-6: $cor-font-size-base-text * 2.5 !default;
+
+$cor-display-font-sizes-1-md: $cor-font-size-base-text * 9 !default;
+$cor-display-font-sizes-2-md: $cor-font-size-base-text * 4.5 !default;
+$cor-display-font-sizes-3-md: $cor-font-size-base-text * 4 !default;
+$cor-display-font-sizes-4-md: $cor-font-size-base-text * 3.5 !default;
+$cor-display-font-sizes-5-md: $cor-font-size-base-text * 3 !default;
+$cor-display-font-sizes-6-md: $cor-font-size-base-text * 2.5 !default;
+
+// Configuración Navbar nav-variables
+$cor-navbar-padding-x: 0 !default;
+$cor-navbar-padding-y: 0.5rem !default;
+// -------------- FIN Sistema de diseño --------------

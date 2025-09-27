@@ -1,0 +1,190 @@
+/*  Configuración fuentes Desktop (-md)*/
+$display-sizes-md: (
+  1: $cor-display-font-sizes-1-md,
+  2: $cor-display-font-sizes-2-md,
+  3: $cor-display-font-sizes-3-md,
+  4: $cor-display-font-sizes-4-md,
+  5: $cor-display-font-sizes-5-md,
+  6: $cor-display-font-sizes-6-md,
+);
+
+$display-sizes: (
+  1: $cor-display-font-sizes-1,
+  2: $cor-display-font-sizes-2,
+  3: $cor-display-font-sizes-3,
+  4: $cor-display-font-sizes-4,
+  5: $cor-display-font-sizes-5,
+  6: $cor-display-font-sizes-6,
+);
+
+$headings-sizes: (
+  1: $cor-h1-font-size,
+  2: $cor-h2-font-size,
+  3: $cor-h3-font-size,
+  4: $cor-h4-font-size,
+  5: $cor-h5-font-size,
+  6: $cor-h6-font-size,
+);
+
+$font-sizes: (
+  1: $b1-font-size,
+  2: $b2-font-size,
+  3: $b3-font-size,
+  4: $b4-font-size,
+  5: $b5-font-size,
+  6: $b6-font-size,
+);
+
+* {
+  font-family: $cor-font-family-body;
+}
+
+/** ESTILOS PARA DISPLAY -- Font KINDLY??
+Usa .d1, .d2, .d3, etc., para aplicar tamaños de fuente predefinidos para los títulos grandes, 
+según el mapa $display-sizes.
+
+Para ajustes responsivos en pantallas medianas y mayores, utiliza el sufijo -md (ej., .d1-md).
+Estas clases (como .d1-md, .d2-md) aplicarán diferentes tamaños de fuente cuando el ancho
+de la pantalla alcance el breakpoint `md`, definido en el mapa $display-sizes-md.
+**/
+@each $size, $value in $display-sizes {
+  .d#{$size} {
+    font-family: $cor-font-family-headings;
+
+    @include media-breakpoint-up(md) {
+      font-size: $value !important;
+    }
+  }
+}
+
+@each $size, $value in $display-sizes-md {
+  .d#{$size}__md {
+    @include media-breakpoint-down(md) {
+      font-size: $value !important;
+    }
+  }
+}
+
+/** ESTILOS PARA HEADING -- Font heuvel
+Usa .h1, .h2, .h3, etc., para aplicar tamaños de fuente predefinidos para los títulos, 
+según el mapa $heading-sizes.
+
+Para ajustes responsivos en pantallas medianas y mayores, utiliza el sufijo -md (ej., .h1-md).
+Estas clases (como .h1-md, .h2-md) aplicarán diferentes tamaños de fuente cuando el ancho
+de la pantalla alcance el breakpoint `md`, definido en el mapa $heading-sizes-md.
+**/
+@each $size, $value in $headings-sizes {
+  .h#{$size},
+  h#{$size} {
+    @include title($size);
+    font-size: $value;
+  }
+
+  .h#{$size}__md {
+    @include media-breakpoint-down(md) {
+      font-size: $value;
+    }
+  }
+}
+
+/** ESTILOS PARA BODY -- Font Heuvel Regular
+Usa .b1, .b2, .b3, etc., para aplicar tamaños de fuente predefinidos para el texto de cuerpo, 
+según el mapa $font-sizes.
+Ejemplo: <p class="b1">Este es un texto de cuerpo con tamaño 1.</p>
+
+Para ajustes responsivos en pantallas medianas y mayores, utiliza el sufijo -md (ej., .b1-md).
+Estas clases (como .b1-md, .b2-md) aplicarán diferentes tamaños de fuente cuando el ancho
+de la pantalla alcance el breakpoint `md`, definido en el mapa $font-sizes-md.
+Ejemplo: <p class="b1 b1-md">Este texto ajustará su tamaño en pantallas medianas.</p>
+**/
+@each $size, $value in $font-sizes {
+  .b#{$size} {
+    font-size: $value;
+    font-weight: 300;
+  }
+
+  .b#{$size}__md {
+    @include media-breakpoint-down(md) {
+      font-size: $value;
+      font-weight: 300;
+    }
+  }
+}
+
+.font__dirty {
+  font-family: "Dirtyline";
+}
+
+.text {
+  &__orange {
+    color: var(--cor-orange);
+  }
+
+  &__red {
+    color: var(--cor-red);
+  }
+
+  &__yellow {
+    color: var(--cor-yellow);
+  }
+
+  &__light-orange {
+    color: var(--cor-light-orange);
+  }
+
+  &__overlay {
+    color: var(--cor-overlay) !important;
+  }
+
+  &__navbar-black {
+    color: var(--cor-navbar-black);
+  }
+
+  &__italic {
+    font-style: italic;
+  }
+
+  &__jumbo {
+    font-family: "SpaceMono";
+    font-size: 146px;
+    line-height: 0.8;
+    letter-spacing: -10px;
+  }
+
+  &__jumbo-2 {
+    font-family: "Questrial";
+    font-size: 150px;
+  }
+
+  &__tag {
+    font-size: $tag1-font-size;
+  }
+
+  @each $alignment in (center, left, right, justify) {
+    &__#{$alignment} {
+      text-align: #{$alignment}; // Estilo base para móviles
+
+      &__md {
+        @include media-breakpoint-down(md) {
+          text-align: #{$alignment} !important; // Variante para pantallas medianas o más grandes
+        }
+      }
+    }
+  }
+
+  &__transform {
+    &-uppercase {
+      text-transform: uppercase; // Equivalente a "text-uppercase" en Bootstrap
+    }
+  }
+
+  &__decoration {
+    &-none {
+      text-decoration: none;
+    }
+
+    &-underline {
+      text-decoration: underline;
+    }
+  }
+}

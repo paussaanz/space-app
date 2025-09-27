@@ -1,0 +1,25 @@
+.hero {
+  position: relative;
+  height: 100svh; // o 100vh
+  overflow: hidden;
+
+  // Asegura que tu <Canvas> o contenedor de <HeroGlobe> llene el hero
+  & > *:not(.hero__overlay) {
+    position: absolute;
+    inset: 0;
+  }
+
+  &__overlay {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    mix-blend-mode: normal; // prueba 'multiply' si te gusta el efecto
+    opacity: 0;
+    z-index: 2;
+  }
+}
+
+/* Si antes usabas esta clase, elimínala del hero */
+.position__fixed {
+  position: fixed;
+}

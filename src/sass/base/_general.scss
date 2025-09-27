@@ -1,0 +1,152 @@
+//  Aquí generamos nuevas clases utils o añadimos alguna funcionalidad nueva a las clases de bootstrap
+:root {
+  --full-vh: 100vh;
+}
+
+* {
+  margin: 0;
+  box-sizing: border-box;
+  // background-color: var(--cor-yellow);
+}
+
+div {
+  line-height: 1;
+  /* O igual al tamaño de la fuente */
+}
+
+#root {
+  min-width: 100vw;
+  min-height: 100vh;
+}
+
+/*GENERAL SCSS*/
+.z-index-100 {
+  z-index: -100;
+}
+.z-index-98 {
+  z-index: -98;
+}
+.z-index-99 {
+  z-index: -99;
+}
+
+.inset-0 {
+  inset: 0;
+}
+.overflow {
+  &__hidden {
+    overflow: hidden !important; // Equivalente a "overflow-x-hidden"
+  }
+
+  &__clip {
+    overflow: clip !important; // Equivalente a "overflow-x-hidden"
+  }
+
+  &__x__clip {
+    overflow-x: clip !important; // Equivalente a "overflow-x-hidden"
+  }
+
+  &__x__hidden {
+    overflow-x: hidden !important; // Equivalente a "overflow-x-hidden"
+  }
+
+  &__y__hidden {
+    overflow-y: hidden !important; // Equivalente a "overflow-y-hidden"
+  }
+
+  &__y__clip {
+    overflow-y: clip !important; // Equivalente a "overflow-y-clip"
+  }
+}
+
+.object__fit {
+  &-cover {
+    object-fit: cover; // Equivalente a "object-fit-cover" en Bootstrap
+  }
+
+  &-contain {
+    object-fit: contain; // Equivalente a "object-fit-contain" en Bootstrap
+  }
+}
+
+.align__content {
+  &-center {
+    align-content: center; // Equivalente a "align-content-center" en Bootstrap
+  }
+}
+
+.align__self {
+  &-center {
+    align-self: center;
+  }
+}
+
+.background {
+  &__white {
+    background-color: var(--cor-white); // Equivalente a "bg-light" en Bootstrap
+  }
+
+  &__black {
+    background-color: var(--cor-black); // Equivalente a "bg-light" en Bootstrap
+  }
+
+  &__orange {
+    background-color: var(
+      --cor-orange
+    ); // Equivalente a "bg-primary" en Bootstrap
+  }
+
+  &__red {
+    background-color: var(--cor-red); // Equivalente a "bg-primary" en Bootstrap
+  }
+
+  &__yellow {
+    background-color: var(
+      --cor-yellow
+    ); // Equivalente a "bg-primary" en Bootstrap
+  }
+
+  &__transparent {
+    background-color: transparent; // Equivalente a "bg-secondary" en Bootstrap
+  }
+}
+
+.pointer__events {
+  &-none {
+    pointer-events: none; // Equivalente a "pointer-events-none" en Bootstrap
+  }
+
+  &-auto {
+    pointer-events: auto; // Para restablecer el comportamiento de los eventos
+  }
+}
+
+.border {
+  &__bottom {
+    border-bottom: 1px solid #ffffff25;
+  }
+  &__top {
+    border-bottom: 1px solid #000;
+  }
+}
+/*SCROLL*/
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: clip;
+}
+
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}

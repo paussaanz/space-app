@@ -1,0 +1,25 @@
+/* ===== Paleta galaxia / glass ===== */
+:root {
+  --space-bg: #0b0f15;
+  --space-bg-2: #0e1320;
+  --c-accent-1: #7ef3ff; /* cyan */
+  --c-accent-2: #7b7bff; /* violeta */
+  --c-accent-3: #ffb86b; /* naranja */
+  --c-accent-4: #3ce4b3; /* verde-menta */
+
+  --text: #e7ecf2;
+  --text-dim: #aeb6c2;
+
+  --glass-bg: rgba(255, 255, 255, 0.06);
+  --glass-stroke: rgba(255, 255, 255, 0.12);
+  --glass-blur: 14px;
+
+  --r-card: 20px;
+  --pad-card: 16px;
+
+  --glow-cyan: 0 0 50px rgba(126, 243, 255, 0.25);
+  --glow-violet: 0 0 60px rgba(123, 123, 255, 0.22);
+  --glow-orange: 0 0 60px rgba(255, 184, 107, 0.18);
+
+  --noise-url: url("/images/noise-space.jpg"); /* pon tu textura si quieres */
+}
