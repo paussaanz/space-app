@@ -209,21 +209,21 @@ export default function WeatherSummaryBlock({
       {/* Columna izquierda: título + estado en texto */}
       <div style={{ minWidth: 0 }}>
         <div style={{ fontWeight: 600, opacity: 0.9, marginBottom: 6 }}>
-          <h1 className="text__jumbo-2" style={{ margin: 0 }}>
+          <h1 className="text__jumbo-2" data-anim="text-anim">
             {title}
           </h1>
         </div>
         <div
+          className="text__transform-uppercase overflow__hidden"
           style={{
             fontWeight: 700,
             letterSpacing: 0.5,
             opacity: 0.95,
             fontSize: 18,
-            textTransform: "uppercase",
             whiteSpace: "nowrap",
             textOverflow: "ellipsis",
-            overflow: "hidden",
           }}
+          data-anim="text-anim"
         >
           {statusText}
         </div>
@@ -253,6 +253,7 @@ export default function WeatherSummaryBlock({
               textAlign: "center",
               whiteSpace: "nowrap",
             }}
+            data-anim="text-anim"
           >
             {intensityText}
           </div>

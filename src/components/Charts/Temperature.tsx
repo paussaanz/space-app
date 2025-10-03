@@ -108,7 +108,9 @@ export default function Temperature({
         }}
       >
         <div style={{ fontWeight: 600, opacity: 0.9 }}>
-          <h1 className="text__jumbo-2">{label}</h1>
+          <h1 className="text__jumbo-2" data-anim="text-anim">
+            {label}
+          </h1>
         </div>
         <div
           style={{
@@ -118,7 +120,7 @@ export default function Temperature({
             gap: 10,
           }}
         >
-          <div className="text__jumbo">
+          <div className="text__jumbo" data-anim="text-anim">
             {value.toFixed(1)}
             {unit}
           </div>

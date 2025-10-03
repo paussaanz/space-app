@@ -16,6 +16,7 @@ body.dark-theme {
     --cor-cursor-mix: difference;
 }
 
+@import "maplibre-gl/dist/maplibre-gl.css";
 
 // FONTS
 @import "base/fonts";
@@ -43,3 +44,4 @@ body.dark-theme {
 @import "components/card";
 @import "components/dashboard";
 @import "components/button";
+@import "components/notifications";

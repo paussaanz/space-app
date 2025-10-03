@@ -23,7 +23,7 @@
     "echarts": "^6.0.0",
     "framer-motion": "^12.23.22",
     "gsap": "^3.13.0",
-    "maplibre-gl": "^5.7.3",
+    "maplibre-gl": "^5.8.0",
     "postprocessing": "^6.37.8",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
@@ -37,6 +37,7 @@
   "devDependencies": {
     "@eslint/js": "^9.36.0",
     "@types/mapbox-gl": "^3.4.1",
+    "@types/maplibre-gl": "^1.13.2",
     "@types/react": "^19.1.14",
     "@types/react-dom": "^19.1.9",
     "@vitejs/plugin-react": "^5.0.3",

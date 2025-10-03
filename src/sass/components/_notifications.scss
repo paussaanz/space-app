@@ -1,0 +1,120 @@
+/* src/styles/_notifications.scss */
+.notif {
+  position: relative;
+}
+.notif__bell {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  color: var(--text, #fff);
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+.notif__badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: 9px;
+  font-size: 11px;
+  line-height: 18px;
+  text-align: center;
+  background: #f44336;
+  color: #fff;
+  font-weight: 700;
+}
+.notif__panel {
+  position: absolute;
+  right: 0;
+  margin-top: 8px;
+  width: 340px;
+  max-height: 60vh;
+  overflow: auto;
+  background: rgba(20, 20, 20, 0.95);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 14px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+.notif__panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px;
+}
+.notif__panel-actions {
+  display: flex;
+  gap: 6px;
+}
+.notif__action {
+  font-size: 12px;
+  opacity: 0.8;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 4px 8px;
+  border-radius: 10px;
+  color: #fff;
+}
+.notif__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.notif__empty {
+  padding: 16px;
+  opacity: 0.7;
+}
+.notif__item {
+  display: flex;
+  gap: 10px;
+  padding: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+.notif__item.is-read {
+  opacity: 0.7;
+}
+.notif__dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-top: 6px;
+  flex: 0 0 10px;
+  background: #aaa;
+}
+.notif__dot[data-level="warn"] {
+  background: #ffa726;
+}
+.notif__dot[data-level="error"] {
+  background: #f44336;
+}
+.notif__content {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.notif__title {
+  font-weight: 700;
+  font-size: 14px;
+}
+.notif__body {
+  font-size: 13px;
+  opacity: 0.9;
+}
+.notif__meta {
+  font-size: 11px;
+  opacity: 0.6;
+  margin-top: 4px;
+}
+.notif__remove {
+  background: transparent;
+  border: none;
+  color: #fff;
+  opacity: 0.6;
+  font-size: 18px;
+  line-height: 1;
+}

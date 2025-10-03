@@ -1,1 +1,0 @@
-//# fetch de datos EO
