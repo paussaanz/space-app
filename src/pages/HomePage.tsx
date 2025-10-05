@@ -1,6 +1,6 @@
 // app/page.tsx
 "use client";
-import { useLocation } from "@/contexts/LocationContext";
+import { useLocation } from "@/providers/LocationProvider";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useEffect, useRef, useState } from "react";
@@ -111,7 +111,6 @@ export default function HomePage() {
       </section>
 
       <section ref={heroRef} className="hero d__vh100 grid">
-        <AskLocationButton />
         <Hero
           title="NASA, SpaceApp Challenges"
           subtitle="From EarthData to Action: Cloud Computing with Earth Observation Data for Predicting Cleaner, Safer Skies"

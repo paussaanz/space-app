@@ -1,19 +1,7 @@
 body.light-theme {
-    --cor-white: #EBE6E0;
-    --cor-black: #202020;
-    --cor-orange: #EA6116;
-    --cor-red: #551720;
-    --cor-yellow: #FFC579;
-    --cor-light-orange: #FF7D36
-    --cor-cursor-mix: color-burn;
-}
-
-body.dark-theme {
-    --cor-light: #131313;
-    --cor-primary: #DA6A2D;
-    --cor-secondary: #EBCC7D;
-    --cor-dark: #EBE6E0;
-    --cor-cursor-mix: difference;
+  --cor-white: #ebe6e0;
+  --cor-black: #202020;
+  --cor-primary: #00ff99;
 }
 
 @import "maplibre-gl/dist/maplibre-gl.css";
@@ -30,8 +18,8 @@ body.dark-theme {
 @import "abstracts/mixins";
 
 // Base
-@import 'base/general';
-@import 'base/text';
+@import "base/general";
+@import "base/text";
 
 // Layout
 @import "layout/spacing-dimension";
@@ -45,3 +33,4 @@ body.dark-theme {
 @import "components/button";
 @import "components/notifications";
 @import "components/navbar";
+@import "components/loader";
