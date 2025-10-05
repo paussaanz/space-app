@@ -2,49 +2,6 @@
 import * as React from "react";
 import WeatherIcon from "../UI/WeatherIcons";
 
-/**
- * === WeatherSummaryBlock — Datos requeridos (TEMPO NASA) ===
- *
- * Este componente DERIVA el estado visual y los textos EXCLUSIVAMENTE
- * de la prop `tempo` que recibes de tu API (datos procedentes de TEMPO).
- *
- * PROPS:
- * - title?: string
- *    Título del bloque. Por defecto "Current Weather".
- * - tempo: TempoObservation   <-- OBLIGATORIO
- *    Objeto con los campos mínimos para derivar cielo, bruma y calidad del aire.
- *    Puedes mapear desde la respuesta real de tu API al siguiente shape:
- *
- *    type TempoObservation = {
- *      // CIELO / AEROSOLES
- *      cloudFraction?: number;           // 0–1 (fracción nubosa). Si no llega, se asume 0.
- *      aerosolOpticalDepth?: number;     // AOD (≈0–3+). Si es alto, indica bruma.
- *      absorbingAerosolIndex?: number;   // UV Aerosol Index. Alto → humo/polvo.
- *
- *      // TRAZAS (calidad del aire) — ajusta unidades a tu API (mol/m², µg/m³, etc.)
- *      no2?: number;
- *      o3?: number;
- *      so2?: number;
- *      hcho?: number;
- *
- *      // Opcional: si tu API ya manda un texto de estado resumido:
- *      labelOverride?: string;           // Sobrescribe el status final si viene informado.
- *    }
- *
- * DERIVACIONES QUE HACE EL COMPONENTE:
- * - Icono (sun/cloud/partly/fog) → a partir de cloudFraction, AOD y UVAI.
- * - statusText (texto principal, MAYÚSCULAS) → prioriza fenómenos como HAZE/SMOKE/DUST,
- *   si no, usa una descripción del cielo (CLEAR SKY / PARTLY CLOUDY / OVERCAST...).
- * - intensityText (línea pequeña bajo el icono) → resume “elevated/high” en NO₂, O₃, SO₂, HCHO
- *   y niveles de aerosoles (“Aerosols elevated / very high”).
- *
- * NOTAS:
- * - Ajusta los UMBRALES de abajo a tus unidades reales de la API.
- * - Si TEMPO no provee precipitación real, no se representará lluvia/nieve.
- * - Si quieres icono específico de nieve/lluvia en el futuro, añade la métrica en `tempo`
- *   (ej. precipitationRate) y extiende `deriveConditionFromTempo`.
- */
-
 export type TempoObservation = {
   cloudFraction?: number;
   aerosolOpticalDepth?: number;

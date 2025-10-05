@@ -1,16 +1,16 @@
 // app/page.tsx
 "use client";
+import { useLocation } from "@/contexts/LocationContext";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useEffect, useRef, useState } from "react";
-import {
-  default as StarGlobeMorphCanvas,
-  default as StarMorphCanvas,
-} from "../components/Canvas/CircleCanvas";
+import { default as StarMorphCanvas } from "../components/Canvas/CircleCanvas";
 import FancyAirQualityMap from "../components/Charts/AirQualityMap";
 import { AirQualityPanel } from "../components/Charts/AirQualityModel";
 import { default as WeatherSummaryBlock } from "../components/Charts/Rain";
 import Temperature from "../components/Charts/Temperature";
+import HealthBadge from "../components/Charts/Wind";
+import { AskLocationButton } from "../components/UI/AskLocation";
 import Hero from "../components/UI/Hero";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -52,22 +52,21 @@ export default function HomePage() {
       },
     });
 
-    const bgTween2 = gsap.to(document.documentElement, {
-      backgroundColor: "#212121ff",
-      ease: "none",
-      scrollTrigger: {
-        trigger: tempRef.current,
-        start: "top top",
-        endTrigger: dashRef.current,
-        end: "top 5%",
-        scrub: true,
-      },
-    });
+    //  const bgTween2 = gsap.to(document.documentElement, {
+    //    backgroundColor: "#212121ff",
+    //    ease: "none",
+    //    scrollTrigger: {
+    //      trigger: tempRef.current,
+    //      start: "top top",
+    //      endTrigger: dashRef.current,
+    //      end: "top 5%",
+    //      scrub: true,
+    //    },
+    //  });
 
     return () => {
       st.kill();
       bgTween.kill();
-      bgTween2.kill();
     };
   }, []);
 
@@ -112,6 +111,7 @@ export default function HomePage() {
       </section>
 
       <section ref={heroRef} className="hero d__vh100 grid">
+        <AskLocationButton />
         <Hero
           title="NASA, SpaceApp Challenges"
           subtitle="From EarthData to Action: Cloud Computing with Earth Observation Data for Predicting Cleaner, Safer Skies"
@@ -120,7 +120,6 @@ export default function HomePage() {
       </section>
 
       <section
-        ref={tempRef}
         className="temperature-banner container__syp position__relative"
         style={{ zIndex: 2 }}
       >
@@ -146,6 +145,7 @@ export default function HomePage() {
       <section
         className="predictions-banner container__syp p__t-5"
         style={{ zIndex: 2 }}
+        ref={tempRef}
       >
         <AirQualityPanel
           //  provider={new MockTempoProvider()}
@@ -173,6 +173,9 @@ export default function HomePage() {
             console.log("Nuevo punto:", lat, lon);
           }}
         />
+      </section>
+      <section>
+        <HealthBadge />
       </section>
     </>
   );

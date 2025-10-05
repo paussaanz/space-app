@@ -1,0 +1,43 @@
+.navbar {
+  mix-blend-mode: difference;
+
+  &--container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  &--left,
+  &--center,
+  &--right {
+    flex: 1;
+    display: flex;
+    align-items: center;
+  }
+
+  &--left {
+    justify-content: flex-start;
+  }
+
+  &--center {
+    justify-content: center;
+  }
+
+  &--right {
+    justify-content: flex-end;
+  }
+
+  &--link {
+    transition: opacity 0.2s ease;
+
+    &:hover {
+      opacity: 0.7;
+    }
+  }
+
+  &--brand-img {
+    height: 2.4rem;
+    width: auto;
+  }
+}

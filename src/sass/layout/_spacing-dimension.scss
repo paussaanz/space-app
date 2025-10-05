@@ -234,7 +234,7 @@ Uso de clases de gap (`.g`):
   @each $i,
     $value in (0: 0rem, 1: 0.25rem, 2: 0.5rem, 3: 1rem, 4: 1.5rem, 5: 3rem)
   {
-    &__x__#{$i} {
+    &__x-#{$i} {
       margin-left: $value;
       margin-right: $value;
     }
@@ -244,7 +244,7 @@ Uso de clases de gap (`.g`):
   @each $i,
     $value in (0: 0rem, 1: 0.25rem, 2: 0.5rem, 3: 1rem, 4: 1.5rem, 5: 3rem)
   {
-    &__y__#{$i} {
+    &__y-#{$i} {
       margin-top: $value;
       margin-bottom: $value;
     }
@@ -254,11 +254,11 @@ Uso de clases de gap (`.g`):
   @each $i,
     $value in (0: 0rem, 1: 0.25rem, 2: 0.5rem, 3: 1rem, 4: 1.5rem, 5: 3rem)
   {
-    &__t__#{$i} {
+    &__t-#{$i} {
       margin-top: $value;
     }
 
-    &__r__#{$i} {
+    &__r-#{$i} {
       margin-right: $value;
     }
 
@@ -266,7 +266,7 @@ Uso de clases de gap (`.g`):
       margin-bottom: $value;
     }
 
-    &__l__#{$i} {
+    &__l-#{$i} {
       margin-left: $value;
     }
   }

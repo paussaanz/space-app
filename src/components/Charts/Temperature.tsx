@@ -1,16 +1,5 @@
 import * as React from "react";
 
-/**
- * Temperature
- * A sleek, dependency‑free temperature meter with:
- *  - Gradient track (cool→hot)
- *  - Animated mercury fill
- *  - Glow dot at current value
- *  - Optional trend arrow and caption
- *
- * Works on any background (transparent card by default).
- */
-
 export type TemperatureProps = {
   label?: string;
   value: number; // current temp
@@ -92,7 +81,7 @@ export default function Temperature({
 
   return (
     <div
-      className="border__bottom p__b-5"
+      className="border__bottom p__b-5 h-100"
       // className={className}
       style={{
         color: "white",

@@ -37,7 +37,6 @@ body.dark-theme {
 @import "layout/spacing-dimension";
 @import "layout/container";
 @import "layout/flex";
-@import "layout/cursor";
 
 // Pages
 @import "components/hero";
@@ -45,3 +44,4 @@ body.dark-theme {
 @import "components/dashboard";
 @import "components/button";
 @import "components/notifications";
+@import "components/navbar";

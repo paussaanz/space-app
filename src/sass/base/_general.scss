@@ -1,5 +1,9 @@
 //  Aquí generamos nuevas clases utils o añadimos alguna funcionalidad nueva a las clases de bootstrap
 :root {
+  // usar la clase bg-image y llamar a este root en el style para añadir la imagen
+  --bg-image: "";
+  --bg-md-image: "";
+  --bg-porcentaje: 0.2;
   --full-vh: 100vh;
 }
 
@@ -28,6 +32,10 @@ div {
 }
 .z-index-99 {
   z-index: -99;
+}
+
+.z-index-10 {
+  z-index: 1000;
 }
 
 .inset-0 {
@@ -80,7 +88,6 @@ div {
     align-self: center;
   }
 }
-
 .background {
   &__white {
     background-color: var(--cor-white); // Equivalente a "bg-light" en Bootstrap
@@ -121,14 +128,6 @@ div {
   }
 }
 
-.border {
-  &__bottom {
-    border-bottom: 1px solid #ffffff25;
-  }
-  &__top {
-    border-bottom: 1px solid #000;
-  }
-}
 /*SCROLL*/
 html.lenis,
 html.lenis body {

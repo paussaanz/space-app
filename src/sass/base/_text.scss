@@ -119,6 +119,9 @@ Ejemplo: <p class="b1 b1-md">Este texto ajustará su tamaño en pantallas median
   &__black {
     color: #000;
   }
+  &__white {
+    color: var(--cor-white);
+  }
   &__orange {
     color: var(--cor-orange);
   }
