@@ -7,25 +7,21 @@ type HeroProps = {
 export default function Hero({ title, subtitle, onEnter }: HeroProps) {
   return (
     <div className="pointer__events-none position__absolute flex d__h100 container__syp">
-      <div className="align__self-center">
+      <div className="align__self-center text__center">
+        <p className="p__b-5 intro-text">{subtitle}</p>
         <h1
-          className="pointer__events-auto text__transform-uppercase"
+          className="pointer__events-auto text__transform-uppercase text__primary text__jumbo"
           style={{
-            width: "50%",
-            fontSize: "clamp(32px, 8vw, 96px)",
+            width: "100%",
             lineHeight: 0.9,
             margin: 0,
             fontWeight: 900,
             letterSpacing: "-0.02em",
-            background: "linear-gradient(180deg, #ffffff, #d6bfa0)",
             WebkitBackgroundClip: "text",
-            color: "transparent",
-            textShadow: "0 0 20px rgba(255,255,255,0.08)",
           }}
         >
           {title}
         </h1>
-        <p className="">{subtitle}</p>
       </div>
     </div>
   );

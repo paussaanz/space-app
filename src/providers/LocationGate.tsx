@@ -1,5 +1,5 @@
 // src/providers/LocationGate.tsx
-import { AskLocationButton } from "@/components/UI/AskLocation"; // ajusta ruta si hace falta
+import { AskLocationButton } from "@/components/UI/AskLocation";
 import { useLocation } from "@/providers/LocationProvider";
 import { useEffect, useState } from "react";
 
@@ -9,21 +9,61 @@ type Props = {
   minSplashMs?: number;
 };
 
+const STORAGE_KEY = "syp:locationAccepted:v1";
+
 export default function LocationGate({
   children,
   requireExact = true,
-  minSplashMs = 2500, // duración mínima del loader en ms
+  minSplashMs = 2500,
 }: Props) {
-  const { status, precision } = useLocation();
-  const [splashDone, setSplashDone] = useState(false);
+  const { status, precision, requestLocation } = useLocation();
 
-  // ⏱ Loader visible al menos X ms
+  const [acceptedEver, setAcceptedEver] = useState<boolean>(() => {
+    try {
+      return localStorage.getItem(STORAGE_KEY) === "1";
+    } catch {
+      return false;
+    }
+  });
+
+  const [splashDone, setSplashDone] = useState(false);
   useEffect(() => {
     const t = setTimeout(() => setSplashDone(true), minSplashMs);
     return () => clearTimeout(t);
   }, [minSplashMs]);
 
-  // 1️⃣ Loader inicial con logo SVG
+  useEffect(() => {
+    if (!acceptedEver) return;
+    if (status === "idle") {
+      requestLocation().catch(() => void 0);
+    }
+  }, [acceptedEver, status, requestLocation]);
+
+  useEffect(() => {
+    const ok = status === "ready" && precision === "exact";
+    if (!ok) return;
+    try {
+      localStorage.setItem(STORAGE_KEY, "1");
+      setAcceptedEver(true);
+    } catch {}
+  }, [status, precision]);
+
+  const lacksExact = requireExact && precision !== "exact";
+  useEffect(() => {
+    if (status === "error" || lacksExact) {
+      try {
+        localStorage.removeItem(STORAGE_KEY);
+      } catch {}
+      setAcceptedEver(false);
+    }
+  }, [status, lacksExact]);
+
+  // Mostramos la web directamente (sin logo ni pantalla ask).
+  if (acceptedEver) {
+    return <>{children}</>;
+  }
+
+  // 1) Loader inicial (solo en primera visita o si no aceptó anteriormente)
   if (!splashDone) {
     return (
       <div className="gate gate--loader">
@@ -44,13 +84,13 @@ export default function LocationGate({
     );
   }
 
-  // 2️⃣ Pantalla para pedir ubicación
+  // 2) Pide ubicación (primera vez o tras denegar)
   if (status === "idle" || status === "requesting") {
     return (
       <div className="gate gate--ask container__syp d__h100">
         <div className="gate--inner d__h100 d__w100">
-          <header className="gate--header">
-            <h1 className="gate--title text__jumbo-2">
+          <header className="gate--header text__center">
+            <h1 className="gate--title text__jumbo-2 text__primary">
               WE NEED ACCESS TO YOUR LOCATION
             </h1>
             <p className="gate--subtitle">Please allow to continue</p>
@@ -63,19 +103,17 @@ export default function LocationGate({
     );
   }
 
-  // 3️⃣ Bloqueo si no se concede
-  const lacksExact = requireExact && precision !== "exact";
+  // 3) Denegado / sin exacto cuando es requerido -> mantener gate en futuras visitas
   if (status === "error" || lacksExact) {
     return (
       <div className="gate gate--blocked">
-        <h2 className="gate__title">Acceso denegado</h2>
+        <h2 className="gate__title">Access Denied</h2>
         <p className="gate__subtitle">
-          ⚠️ No puedes entrar sin permitir tu ubicación.
+          ⚠️ Sorry! You cannot enter the web without allowing your location
         </p>
       </div>
     );
   }
 
-  // 4️⃣ OK → mostrar contenido real
   return <>{children}</>;
 }

@@ -1,7 +1,9 @@
-// WeatherSummaryBlock.tsx
+// src/components/Charts/Rain.tsx (o WeatherSummaryBlock.tsx)
 import * as React from "react";
+import { meteo } from "../../lib/http";
 import WeatherIcon from "../UI/WeatherIcons";
 
+// ====== Tipos existentes ======
 export type TempoObservation = {
   cloudFraction?: number;
   aerosolOpticalDepth?: number;
@@ -15,7 +17,15 @@ export type TempoObservation = {
 
 export type WeatherSummaryProps = {
   title?: string;
-  tempo: TempoObservation; // <-- obligatorio, TODO se deriva de aquí
+
+  // MODO 1: TEMPO (como ya tenías)
+  tempo?: TempoObservation;
+
+  // MODO 2: Open-Meteo (novedad)
+  lat?: number;
+  lon?: number;
+  refreshMs?: number; // refresco opcional
+
   iconSize?: number; // px, por defecto 126
   className?: string;
   style?: React.CSSProperties;
@@ -49,24 +59,25 @@ const mapToIconKind = (
     case "fog":
       return "cloud";
     case "snow":
-      return "cloud-rain"; // añade "cloud-snow" en WeatherIcons si quieres
+      // si tienes "cloud-snow", cámbialo aquí
+      return "cloud-rain";
     default:
       return "cloud";
   }
 };
 
-/** UMBRALES — Ajusta a las UNIDADES reales de tu API TEMPO */
+/** ====== UMBRALES TEMPO (como los tenías) ====== */
 const THRESHOLDS = {
   cloud: { clear: 0.3, broken: 0.7 }, // <0.3 despejado, 0.3–0.7 parcial, >0.7 nublado
-  aod: { haze: 0.4, heavyHaze: 0.8 }, // bruma >0.4, bruma intensa >0.8
-  uvai: { smokeDust: 1.0 }, // humo/polvo significativo
-  // Bandas de trazas (ejemplo). Calibra con tus escalas/unidades:
+  aod: { haze: 0.4, heavyHaze: 0.8 },
+  uvai: { smokeDust: 1.0 },
   no2: { elevated: 3e-5, high: 7e-5 },
   o3: { elevated: 6e-5, high: 1.2e-4 },
   so2: { elevated: 5e-6, high: 1.5e-5 },
   hcho: { elevated: 5e-6, high: 1.2e-5 },
 };
 
+// ====== Derivación desde TEMPO (como tenías) ======
 function deriveConditionFromTempo(t: TempoObservation): Condition {
   const cf = t.cloudFraction ?? 0;
   const aod = t.aerosolOpticalDepth ?? 0;
@@ -79,18 +90,11 @@ function deriveConditionFromTempo(t: TempoObservation): Condition {
       ? "partly"
       : "cloudy";
 
-  // Si hay bruma intensa o humo/polvo, visualmente mostramos niebla
-  if (aod >= THRESHOLDS.aod.heavyHaze || uvai >= THRESHOLDS.uvai.smokeDust) {
+  if (aod >= THRESHOLDS.aod.heavyHaze || uvai >= THRESHOLDS.uvai.smokeDust)
     cond = "fog";
-  }
-
   return cond;
 }
-
-function deriveStatusFromTempo(
-  t: TempoObservation,
-  baseCond: Condition
-): string {
+function deriveStatusFromTempo(t: TempoObservation): string {
   if (t.labelOverride) return t.labelOverride;
 
   const cf = t.cloudFraction ?? 0;
@@ -100,15 +104,12 @@ function deriveStatusFromTempo(
   if (aod >= THRESHOLDS.aod.heavyHaze) return "HEAVY HAZE";
   if (uvai >= THRESHOLDS.uvai.smokeDust) return "SMOKE / DUST";
   if (aod >= THRESHOLDS.aod.haze) return "HAZY";
-
   if (cf < THRESHOLDS.cloud.clear) return "CLEAR SKY";
   if (cf < THRESHOLDS.cloud.broken) return "PARTLY CLOUDY";
   return cf > 0.9 ? "OVERCAST" : "MOSTLY CLOUDY";
 }
-
 function deriveIntensityFromTempo(t: TempoObservation) {
   const notes: string[] = [];
-
   const pushBand = (
     name: string,
     v: number | undefined,
@@ -118,7 +119,6 @@ function deriveIntensityFromTempo(t: TempoObservation) {
     if (v >= bands.high) notes.push(`${name} high`);
     else if (v >= bands.elevated) notes.push(`${name} elevated`);
   };
-
   pushBand("NO₂", t.no2, THRESHOLDS.no2);
   pushBand("O₃", t.o3, THRESHOLDS.o3);
   pushBand("SO₂", t.so2, THRESHOLDS.so2);
@@ -130,30 +130,144 @@ function deriveIntensityFromTempo(t: TempoObservation) {
     else if (t.aerosolOpticalDepth >= THRESHOLDS.aod.haze)
       notes.push("Aerosols elevated");
   }
-
   return notes.length ? notes.join(" · ") : undefined;
 }
 
+// ====== Derivación desde Open-Meteo ======
+type OMCurrent = {
+  weather_code?: number;
+  cloud_cover?: number; // 0..100
+  precipitation?: number; // mm
+  rain?: number; // mm
+  showers?: number; // mm
+  snowfall?: number; // cm
+  is_day?: number; // 1/0
+};
+
+const WMO_TO_CONDITION = (code?: number): Condition => {
+  if (code == null) return "cloudy";
+  // grupos principales WMO (simplificados)
+  if ([0].includes(code)) return "sunny"; // Clear
+  if ([1, 2].includes(code)) return "partly"; // Mainly clear / partly cloudy
+  if ([3].includes(code)) return "cloudy"; // Overcast
+  if ([45, 48].includes(code)) return "fog"; // Fog / rime fog
+  if ([51, 53, 55, 56, 57, 61, 63, 65, 80, 81, 82].includes(code))
+    return "rain"; // drizzle/rain/showers
+  if ([71, 73, 75, 77, 85, 86].includes(code)) return "snow"; // snow
+  if ([95, 96, 99].includes(code)) return "thunder"; // thunderstorm
+  return "cloudy";
+};
+
+const WMO_TO_STATUS = (code?: number): string => {
+  if (code == null) return "UNKNOWN";
+  const t: Record<number, string> = {
+    0: "CLEAR SKY",
+    1: "MAINLY CLEAR",
+    2: "PARTLY CLOUDY",
+    3: "OVERCAST",
+    45: "FOG",
+    48: "RIME FOG",
+    51: "LIGHT DRIZZLE",
+    53: "DRIZZLE",
+    55: "HEAVY DRIZZLE",
+    56: "FREEZING DRIZZLE",
+    57: "HEAVY FREEZING DRIZZLE",
+    61: "LIGHT RAIN",
+    63: "RAIN",
+    65: "HEAVY RAIN",
+    71: "LIGHT SNOW",
+    73: "SNOW",
+    75: "HEAVY SNOW",
+    77: "SNOW GRAINS",
+    80: "LIGHT SHOWERS",
+    81: "SHOWERS",
+    82: "HEAVY SHOWERS",
+    85: "SNOW SHOWERS",
+    86: "HEAVY SNOW SHOWERS",
+    95: "THUNDERSTORM",
+    96: "THUNDER + HAIL",
+    99: "SEVERE THUNDER + HAIL",
+  };
+  return t[code] ?? "UNKNOWN";
+};
+
 export default function WeatherSummaryBlock({
   title = "WEATHER",
-  tempo,
+  tempo, // si viene, usamos TEMPO
+  lat,
+  lon, // si vienen, usamos Open-Meteo
+  refreshMs,
   iconSize = 126,
   className,
   style,
   color = "#fff",
   accent = "#6EC1FF",
 }: WeatherSummaryProps) {
-  // 1) Derivar todo desde TEMPO
-  const condition = deriveConditionFromTempo(tempo);
-  const statusText = deriveStatusFromTempo(tempo, condition);
-  const intensityText = deriveIntensityFromTempo(tempo);
+  const useOpenMeteo = typeof lat === "number" && typeof lon === "number";
 
-  // 2) Icono según condición
+  // Estado Open-Meteo
+  const [om, setOm] = React.useState<OMCurrent | null>(null);
+  const [loading, setLoading] = React.useState<boolean>(false);
+  const [error, setError] = React.useState<unknown>(null);
+
+  const fetchOM = React.useCallback(async () => {
+    if (!useOpenMeteo) return;
+    try {
+      setLoading(true);
+      setError(null);
+      const data = await meteo.get<{ current?: OMCurrent }>("/v1/forecast", {
+        latitude: lat,
+        longitude: lon,
+        current:
+          "weather_code,cloud_cover,precipitation,rain,showers,snowfall,is_day",
+        timezone: "auto",
+      });
+      setOm(data.current ?? null);
+    } catch (e) {
+      setError(e);
+    } finally {
+      setLoading(false);
+    }
+  }, [useOpenMeteo, lat, lon]);
+
+  React.useEffect(() => {
+    if (!useOpenMeteo) return;
+    fetchOM();
+    if (!refreshMs) return;
+    const id = setInterval(fetchOM, refreshMs);
+    return () => clearInterval(id);
+  }, [useOpenMeteo, fetchOM, refreshMs]);
+
+  // Derivar UI segun modo
+  let condition: Condition = "cloudy";
+  let statusText = "—";
+  let intensityText: string | undefined;
+
+  if (useOpenMeteo && om) {
+    condition = WMO_TO_CONDITION(om.weather_code);
+    statusText = WMO_TO_STATUS(om.weather_code);
+    // “intensidad” simple con precipitación / nubosidad
+    const notes: string[] = [];
+    if ((om.rain ?? 0) > 0) notes.push(`Rain ${om.rain?.toFixed(1)} mm`);
+    if ((om.showers ?? 0) > 0)
+      notes.push(`Showers ${om.showers?.toFixed(1)} mm`);
+    if ((om.snowfall ?? 0) > 0)
+      notes.push(`Snow ${om.snowfall?.toFixed(1)} cm`);
+    if (om.cloud_cover != null) notes.push(`Clouds ${om.cloud_cover}%`);
+    intensityText = notes.length ? notes.join(" · ") : undefined;
+  } else if (!useOpenMeteo && tempo) {
+    condition = deriveConditionFromTempo(tempo);
+    statusText = deriveStatusFromTempo(tempo);
+    intensityText = deriveIntensityFromTempo(tempo);
+  } else {
+    statusText = "NO DATA";
+  }
+
   const kind = mapToIconKind(condition);
 
   return (
     <div
-      className={`flex-col-rain-movil ${className}`}
+      className={`flex-col-rain-movil ${className ?? ""}`}
       style={{
         color: "white",
         display: "grid",
@@ -163,13 +277,14 @@ export default function WeatherSummaryBlock({
         ...style,
       }}
     >
-      {/* Columna izquierda: título + estado en texto */}
-      <div  style={{ minWidth: 0 }}>
+      {/* Columna izquierda: título + estado */}
+      <div style={{ minWidth: 0 }}>
         <div style={{ fontWeight: 600, opacity: 0.9, marginBottom: 6 }}>
           <h1 className="text__jumbo-2" data-anim="text-anim">
             {title}
           </h1>
         </div>
+
         <div
           className="text__transform-uppercase overflow__hidden"
           style={{
@@ -182,11 +297,15 @@ export default function WeatherSummaryBlock({
           }}
           data-anim="text-anim"
         >
-          {statusText}
+          {useOpenMeteo && loading
+            ? "LOADING…"
+            : useOpenMeteo && error
+            ? "ERROR"
+            : statusText}
         </div>
       </div>
 
-      {/* Columna derecha: icono + intensidad debajo */}
+      {/* Columna derecha: icono + intensidad */}
       <div
         style={{
           display: "flex",

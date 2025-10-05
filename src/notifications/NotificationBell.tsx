@@ -10,7 +10,7 @@ export default function NotificationBell() {
   const panelRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    function onDocClick(e: MouseEvent) {
+    function onDocMouseDown(e: MouseEvent) {
       if (!open) return;
       const t = e.target as Node;
       if (
@@ -25,13 +25,18 @@ export default function NotificationBell() {
     function onEsc(e: KeyboardEvent) {
       if (e.key === "Escape") setOpen(false);
     }
-    document.addEventListener("mousedown", onDocClick);
+    document.addEventListener("mousedown", onDocMouseDown);
     document.addEventListener("keydown", onEsc);
     return () => {
-      document.removeEventListener("mousedown", onDocClick);
+      document.removeEventListener("mousedown", onDocMouseDown);
       document.removeEventListener("keydown", onEsc);
     };
   }, [open]);
+
+  // 👇 Evita que el mousedown dentro del panel burbujee hasta document
+  const stopMouseDown = (e: React.MouseEvent) => {
+    e.stopPropagation();
+  };
 
   return (
     <div className="notif">
@@ -39,9 +44,9 @@ export default function NotificationBell() {
         ref={btnRef}
         aria-label="Notifications"
         className="notif__bell"
+        type="button"
         onClick={() => setOpen((o) => !o)}
       >
-        {/* simple bell svg */}
         <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true">
           <path
             fill="currentColor"
@@ -61,26 +66,45 @@ export default function NotificationBell() {
           className="notif__panel"
           role="dialog"
           aria-label="Notifications"
+          onMouseDown={stopMouseDown} // 👈 clave
         >
           <div className="notif__panel-header">
             <strong>Notifications</strong>
             <div className="notif__panel-actions">
-              <button onClick={markAllRead} className="notif__action">
+              <button
+                type="button"
+                className="notif__action"
+                onClick={async (e) => {
+                  e.stopPropagation();
+                  await markAllRead(); // por si es async
+                }}
+              >
                 Mark all read
               </button>
-              <button onClick={clearAll} className="notif__action">
+              <button
+                type="button"
+                className="notif__action"
+                onClick={async (e) => {
+                  e.stopPropagation();
+                  await clearAll();
+                }}
+              >
                 Clear
               </button>
               <button
-                onClick={() => requestBrowserPerm()}
+                type="button"
                 className="notif__action"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  requestBrowserPerm();
+                }}
               >
                 Enable Push
               </button>
             </div>
           </div>
 
-          <ul className="notif__list">
+          <ul className="notif__list" onMouseDown={stopMouseDown}>
             {items.length === 0 && (
               <li className="notif__empty">No notifications</li>
             )}
@@ -100,7 +124,11 @@ export default function NotificationBell() {
                 <button
                   className="notif__remove"
                   aria-label="Remove"
-                  onClick={() => remove(it.id)}
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    remove(it.id);
+                  }}
                 >
                   ×
                 </button>

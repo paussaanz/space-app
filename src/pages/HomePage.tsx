@@ -1,6 +1,5 @@
 // app/page.tsx
 "use client";
-import { useLocation } from "@/providers/LocationProvider";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useEffect, useRef, useState } from "react";
@@ -10,15 +9,14 @@ import { AirQualityPanel } from "../components/Charts/AirQualityModel";
 import { default as WeatherSummaryBlock } from "../components/Charts/Rain";
 import Temperature from "../components/Charts/Temperature";
 import HealthBadge from "../components/Charts/Wind";
-import { AskLocationButton } from "../components/UI/AskLocation";
 import Hero from "../components/UI/Hero";
-
+import WeatherTemperature from "../components/UI/TemperatureProps";
 gsap.registerPlugin(ScrollTrigger);
 
 export default function HomePage() {
   const [p, setP] = useState(0);
-  const lat = 10.4168,
-    lon = -3.7038;
+  const lat = 37.1036,
+    lon = -76.3868;
   const STYLE_URL = `https://api.maptiler.com/maps/darkmatter/style.json?key=${
     import.meta.env.VITE_MAPTILER_KEY
   }`;
@@ -112,7 +110,7 @@ export default function HomePage() {
 
       <section ref={heroRef} className="hero d__vh100 grid">
         <Hero
-          title="NASA, SpaceApp Challenges"
+          title="NASA SpaceApp Challenges"
           subtitle="From EarthData to Action: Cloud Computing with Earth Observation Data for Predicting Cleaner, Safer Skies"
           onEnter={goToDashboard}
         />
@@ -122,22 +120,25 @@ export default function HomePage() {
         className="temperature-banner container__syp position__relative"
         style={{ zIndex: 2 }}
       >
-        <Temperature />
+        <Temperature
+          label="TEMP."
+          lat={lat}
+          lon={lon}
+          min={-10}
+          max={45}
+          unit="°C"
+          refreshMs={5 * 60 * 1000} // opcional: refresca cada 5 min
+        />
       </section>
 
       <section className="wind-box"></section>
 
       <section className="rain-banner container__syp p__5 border__bottom">
         <WeatherSummaryBlock
-          tempo={{
-            cloudFraction: 0.62,
-            aerosolOpticalDepth: 0.55,
-            absorbingAerosolIndex: 0.3,
-            no2: 4.2e-5,
-            o3: 8.0e-5,
-            so2: 2.0e-6,
-            hcho: 6.0e-6,
-          }}
+          title="WEATHER"
+          lat={40.4168}
+          lon={-3.7038}
+          refreshMs={5 * 60_000}
         />
       </section>
 
@@ -146,12 +147,7 @@ export default function HomePage() {
         style={{ zIndex: 2 }}
         ref={tempRef}
       >
-        <AirQualityPanel
-          //  provider={new MockTempoProvider()}
-          lat={410.4168}
-          lon={-97.7038}
-          placeName="Madrid"
-        />
+        <AirQualityPanel lat={lat} lon={lon} placeName="Madrid" />
       </section>
 
       <section

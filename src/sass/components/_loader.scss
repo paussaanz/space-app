@@ -63,12 +63,13 @@
     flex-direction: column;
     justify-content: center;
     height: 100%;
+    align-items: center;
   }
 
   /* ==== HEADER ==== */
   .gate--header {
-    max-width: 900px;
-    margin-bottom: clamp(2rem, 8vw, 6rem);
+    max-width: 1000px;
+    margin-bottom: 20px;
   }
 
   .gate--title {

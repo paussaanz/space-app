@@ -149,3 +149,29 @@ html.lenis body {
 .lenis.lenis-smooth iframe {
   pointer-events: none;
 }
+
+.about__cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 1.5rem;
+
+  > * {
+    flex: 1 1 calc(33.333% - 1rem); // 3 cards por fila
+    max-width: calc(33.333% - 1rem);
+  }
+
+  @media (max-width: 992px) {
+    > * {
+      flex: 1 1 calc(50% - 1rem); // 2 por fila en tablets
+      max-width: calc(50% - 1rem);
+    }
+  }
+
+  @media (max-width: 600px) {
+    > * {
+      flex: 1 1 100%; // 1 por fila en móvil
+      max-width: 100%;
+    }
+  }
+}

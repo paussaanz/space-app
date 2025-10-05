@@ -118,3 +118,98 @@
   font-size: 18px;
   line-height: 1;
 }
+.aqi-popup {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  z-index: 1000;
+  backdrop-filter: blur(2px);
+
+  &__panel {
+    width: min(720px, 100%);
+    background: var(--color-surface, #111);
+    color: var(--color-on-surface, #fff);
+    border-radius: 1rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+    padding: 1rem 1rem 1rem;
+
+    @media (min-width: 768px) {
+      padding: 1.25rem 1.25rem 1rem;
+    }
+
+    &--unhealthy {
+      border: 2px solid #f39c12;
+    }
+    &--very-unhealthy {
+      border: 2px solid #e67e22;
+    }
+    &--hazardous {
+      border: 2px solid #e74c3c;
+    }
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  &__close {
+    appearance: none;
+    background: transparent;
+    border: 0;
+    font-size: 1.5rem;
+    line-height: 1;
+    color: inherit;
+    cursor: pointer;
+    padding: 0.25rem 0.5rem;
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+
+  &__body {
+    margin: 0.5rem 0 1rem;
+  }
+
+  &__tips {
+    margin: 0.5rem 0 0 1.25rem;
+    display: grid;
+    gap: 0.25rem;
+    list-style: disc;
+  }
+
+  &__actions {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: flex-end;
+  }
+}
+
+/* Botones base mínimos (ajústalos a tu sistema) */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.6rem 0.9rem;
+  border-radius: 0.75rem;
+  border: 1px solid transparent;
+  cursor: pointer;
+  font: inherit;
+
+  &--primary {
+    background: #e74c3c;
+    color: #fff;
+  }
+  &--ghost {
+    background: transparent;
+    color: inherit;
+    border-color: currentColor;
+  }
+}

@@ -5,17 +5,13 @@ export function AskLocationButton() {
   const { status, coords, precision, requestLocation, error } = useLocation();
 
   const handleClick = async () => {
-    console.log("📡 Solicitando ubicación...");
     await requestLocation();
-    console.log("✅ Estado actualizado:", { status, coords, precision, error });
   };
 
   return (
-    <div className="p__t-5" style={{ zIndex: 500 }}>
+    <div>
       <button onClick={handleClick} disabled={status === "requesting"}>
-        {status === "requesting"
-          ? "Obteniendo ubicación..."
-          : "Usar mi ubicación"}
+        {status === "requesting" ? "Obtaining location..." : "Use my location"}
       </button>
 
       {coords && (
