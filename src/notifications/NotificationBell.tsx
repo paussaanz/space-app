@@ -1,6 +1,6 @@
 // src/notifications/NotificationBell.tsx
 import React, { useEffect, useRef, useState } from "react";
-import { useNotifications } from "./NotificationsContext";
+import { useNotifications } from "../providers/NotificationsProvider";
 
 export default function NotificationBell() {
   const { unread, items, markAllRead, clearAll, remove, requestBrowserPerm } =

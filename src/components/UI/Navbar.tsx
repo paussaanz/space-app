@@ -3,9 +3,9 @@ import logo from "/logo-white.svg";
 
 export default function Navbar() {
   return (
-    <header className="navbar position__fixed z-index-10 d__w100 p__4">
+    <header className="navbar position__fixed z-index-10 d__vw100 p__4">
       <div className="navbar--container">
-        {/* Sección izquierda */}
+        {/* Izquierda */}
         <nav className="navbar--left">
           <a
             href="/about"
@@ -15,7 +15,7 @@ export default function Navbar() {
           </a>
         </nav>
 
-        {/* Centro: Logo */}
+        {/* Centro */}
         <div className="navbar--center">
           <a
             href="/"
@@ -23,13 +23,13 @@ export default function Navbar() {
           >
             <img
               src={logo}
-              alt="SYP Creative Logo"
+              alt="NASA Space App Challenges"
               className="navbar--brand-img"
             />
           </a>
         </div>
 
-        {/* Derecha: notificaciones */}
+        {/* Derecha */}
         <nav className="navbar--right">
           <NotificationBell />
         </nav>

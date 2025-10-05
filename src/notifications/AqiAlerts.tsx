@@ -1,7 +1,7 @@
 // src/notifications/aqiAlerts.ts
 import { useRef } from "react";
+import { useNotifications } from "../providers/NotificationsProvider";
 import { aqiCategory, categoryLabel } from "../utils/aqi";
-import { useNotifications } from "./NotificationsContext";
 
 export function useAQIAlerts() {
   const { add } = useNotifications();

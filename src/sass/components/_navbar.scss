@@ -1,5 +1,12 @@
 .navbar {
   mix-blend-mode: difference;
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(100%, var(--cor-container-max-widths-lg));
+  padding: var(--navbar-padding, 1rem);
+  z-index: 1000;
 
   &--container {
     display: flex;
@@ -39,5 +46,34 @@
   &--brand-img {
     height: 2.4rem;
     width: auto;
+  }
+
+  /* 📱 --- Versión mobile --- */
+  @media (max-width: 767px) {
+    left: 0;
+    transform: none;
+    width: 100%;
+    padding-inline: 1.25rem;
+
+    &--container {
+      justify-content: space-between;
+    }
+
+    /* ocultamos el enlace "About us" */
+    &--left {
+      .navbar--link {
+        display: none;
+      }
+    }
+
+    /* movemos el logo a la izquierda */
+    &--center {
+      justify-content: flex-start;
+      flex: unset;
+    }
+
+    &--brand-img {
+      height: 2rem;
+    }
   }
 }

@@ -3,20 +3,16 @@
 
 // Colores corporativos
 :root {
-    --cor-white: #EBE6E0;
-    --cor-black: #202020;
-    --cor-orange: #EA6116;
-    --cor-red: #551720;
-    --cor-yellow: #FFC579;
-    --cor-light-orange: #FF7D36
-    --cor-navbar-black: #202020;
+  --cor-white: #ebe6e0;
+  --cor-black: #202020;
+  --cor-primary: #00ff99;
 
-    --cor-overlay: #EBE6E0;
-    --cor-button-light: #EBE6E0;
-    --cor-button-green: #2F4F4F;
-    --cor-button-dark: #131313;
-    --cor-button-purple: #301A4B;
-    --cor-cursor-mix: color-burn;
+  --cor-overlay: #ebe6e0;
+  --cor-button-light: #ebe6e0;
+  --cor-button-green: #2f4f4f;
+  --cor-button-dark: #131313;
+  --cor-button-purple: #301a4b;
+  --cor-cursor-mix: color-burn;
 }
 
 // Configuración fuentes generales
@@ -25,7 +21,7 @@ $cor-font-family-body: "Questrial" !default;
 // Configuración fuentes Headings añadidas en _mixins.scss
 $cor-font-family-headings: "SpaceMono" !default;
 
-//Configuración Editorials body 
+//Configuración Editorials body
 $cor-font-family-tag: "Darker Grotesque", sans-serif !default;
 
 // Espacio para los bloques
@@ -33,7 +29,7 @@ $cor-spacer: 1rem !default;
 
 // Define la paleta de colores básica
 $cor-black: #000000 !default;
-$cor-white: #FFFFFF !default; // Respetar siempre em blanco puro
+$cor-white: #ffffff !default; // Respetar siempre em blanco puro
 $cor-transparent: transparent !default;
 
 // Configuración colores del body
@@ -87,12 +83,12 @@ $cor-h5-font-size: $cor-font-size-base-text * toRem(25) !default;
 $cor-h6-font-size: $cor-font-size-base-text * toRem(20) !default;
 
 // Configuraciones altura de linea añadidas en _mixins.scss
-$cor-h1-line-height: 1.10 !default;
+$cor-h1-line-height: 1.1 !default;
 $cor-h2-line-height: 1.08 !default;
-$cor-h3-line-height: 1.20 !default;
-$cor-h4-line-height: 1.20 !default;
-$cor-h5-line-height: 1.20 !default;
-$cor-h6-line-height: 1.20 !default;
+$cor-h3-line-height: 1.2 !default;
+$cor-h4-line-height: 1.2 !default;
+$cor-h5-line-height: 1.2 !default;
+$cor-h6-line-height: 1.2 !default;
 
 // Configuraciones altura de linea añadidas en _mixins.scss
 $cor-h1-letter-spacing: normal !default;
@@ -109,7 +105,6 @@ $b3-font-size: $cor-font-size-base-text * toRem(31); // 16px
 $b4-font-size: $cor-font-size-base-text * toRem(25); // ejemplo 15px
 $b5-font-size: $cor-font-size-base-text * toRem(20); // ejemplo 14px
 $b6-font-size: $cor-font-size-base-text * toRem(16); // ejemplo 13px
-
 
 //TAG
 $tag1-font-size: $cor-font-size-base-text * toRem(7); // ejemplo 13px

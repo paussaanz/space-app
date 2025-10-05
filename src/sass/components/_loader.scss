@@ -1,0 +1,140 @@
+.gate--loader {
+  display: grid;
+  place-items: center;
+  height: 100svh;
+  background: #000;
+  animation: fadeOut 0.6s ease forwards;
+  animation-delay: 2.3s; // coincide con el minSplashMs
+
+  .gate__logo {
+    width: 200px;
+    height: auto;
+    fill: none;
+    stroke: var(--cor-primary); // color del trazo
+    stroke-width: 2;
+  }
+
+  .gate__logo-group path {
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 1000;
+    animation: draw 2s ease forwards, fillColor 2s ease forwards;
+  }
+}
+
+@keyframes draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes fillColor {
+  0% {
+    fill: none;
+  }
+  80% {
+    fill: none;
+  }
+  100% {
+    fill: var(--cor-primary);
+  }
+}
+
+@keyframes fadeOut {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+/* ====== LOCATION GATE (pantalla de permiso de ubicación) ====== */
+.gate.gate--ask {
+  background-color: var(--cor-bg, #0e131b);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100svh;
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+
+  .gate--inner {
+    width: min(90%, 1400px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+  }
+
+  /* ==== HEADER ==== */
+  .gate--header {
+    max-width: 900px;
+    margin-bottom: clamp(2rem, 8vw, 6rem);
+  }
+
+  .gate--title {
+    font-weight: 800;
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    text-transform: uppercase;
+    font-size: clamp(2.6rem, 10vw, 8rem);
+    margin: 0;
+  }
+
+  .gate--subtitle {
+    font-family: var(--cus-font-family-sans-serif, "Gamilia", sans-serif);
+    font-size: clamp(0.9rem, 1.4vw, 1.1rem);
+    letter-spacing: 0.01em;
+    opacity: 0.8;
+    margin-top: 1rem;
+    color: var(--cor-muted, #9aa3ac);
+  }
+
+  /* ==== CTA BUTTON ==== */
+  .gate--cta {
+    margin-top: clamp(1rem, 3vw, 3rem);
+  }
+
+  .gate--cta button {
+    font-family: var(--cus-font-family-sans-serif, "Gamilia", sans-serif);
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    background: transparent;
+    color: var(--cor-text, #ececec);
+    border-radius: 999px;
+    padding: 0.75rem 1.6rem;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    backdrop-filter: blur(3px);
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.4);
+      transform: translateY(-2px);
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+
+  /* ==== RESPONSIVE (para pantallas pequeñas) ==== */
+  @media (max-width: 768px) {
+    .gate--title {
+      font-size: clamp(2rem, 12vw, 4.5rem);
+    }
+
+    .gate--subtitle {
+      font-size: 0.9rem;
+    }
+
+    .gate--cta {
+      margin-top: 2rem;
+    }
+  }
+}

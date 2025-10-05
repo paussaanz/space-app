@@ -1,5 +1,5 @@
 // En cualquier componente
-import { useLocation } from "@/contexts/LocationContext";
+import { useLocation } from "@/providers/LocationProvider";
 
 export function AskLocationButton() {
   const { status, coords, precision, requestLocation, error } = useLocation();
