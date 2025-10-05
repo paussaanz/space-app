@@ -88,12 +88,13 @@ export default function Temperature({
         ...style,
       }}
     >
-      <div
+      <div className="flex-col-tem-movil"
         style={{
           display: "flex",
           alignItems: "baseline",
           gap: 12,
           marginBottom: 8,
+
         }}
       >
         <div style={{ fontWeight: 600, opacity: 0.9 }}>

@@ -226,7 +226,7 @@ export function AirQualityPanel({
   const cat = aqiCategory(nowAQI);
 
   return (
-    <div style={{ display: "grid", gap: 16 }}>
+    <div className="flex-col-airmodel-movil" style={{ display: "grid", gap: 16 }}>
       <div style={styles.card}>
         <div>
           <p className="text__white h5 p__b-2" style={styles.subtitle}>

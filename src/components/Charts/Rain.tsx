@@ -153,7 +153,7 @@ export default function WeatherSummaryBlock({
 
   return (
     <div
-      className={className}
+      className={`flex-col-rain-movil ${className}`}
       style={{
         color: "white",
         display: "grid",
@@ -164,7 +164,7 @@ export default function WeatherSummaryBlock({
       }}
     >
       {/* Columna izquierda: título + estado en texto */}
-      <div style={{ minWidth: 0 }}>
+      <div  style={{ minWidth: 0 }}>
         <div style={{ fontWeight: 600, opacity: 0.9, marginBottom: 6 }}>
           <h1 className="text__jumbo-2" data-anim="text-anim">
             {title}
