@@ -1,0 +1,17 @@
+.flex-col-tem-movil{
+	@include media-breakpoint-down(md){
+		flex-direction: column;
+	}
+}
+.flex-col-rain-movil{
+	@include media-breakpoint-down(md){
+		display: flex !important;
+		flex-wrap: wrap;
+	}
+}
+.flex-col-airmodel-movil{
+	@include media-breakpoint-down(md){
+		display: flex !important;
+		flex-wrap: wrap;
+	}
+}
