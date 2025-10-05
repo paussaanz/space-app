@@ -169,9 +169,6 @@ export default function HomePage() {
           }}
         />
       </section>
-      <section>
-        <HealthBadge />
-      </section>
     </>
   );
 }
